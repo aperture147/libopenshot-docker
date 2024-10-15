@@ -1,0 +1,11 @@
+{
+    "image": "aperture147/libopenshot:latest",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.debugpy"
+            ]
+        }
+    }
+}
