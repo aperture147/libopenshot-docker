@@ -2,13 +2,25 @@ import openshot
 import math
 import os
 
-r = openshot.FFmpegReader(os.path.join(os.path.dirname(__file__), "video.mp4"))
+setting = openshot.Settings.Instance()
+setting.VIDEO_CACHE_PERCENT_AHEAD = 24
+setting.FF_THREADS = 16
+setting.VIDEO_CACHE_PERCENT_AHEAD = 0
+setting.VIDEO_CACHE_MIN_PREROLL_FRAMES = 0
+setting.VIDEO_CACHE_MAX_PREROLL_FRAMES = 0
+setting.VIDEO_CACHE_MAX_FRAMES = 0
+setting.ENABLE_PLAYBACK_CACHING = False
+setting.HIGH_QUALITY_SCALING = True
+# setting.DEBUG_TO_STDERR = False
+
+location = os.path.dirname(__file__)
+r = openshot.FFmpegReader(os.path.join(location, "video.mp4"))
 r.Open()
 
-c1 = openshot.Clip(r)
-c1.Open()
+c = openshot.Clip(r)
+c.Open()
 
-w = openshot.FFmpegWriter("output1.mp4")
+w = openshot.FFmpegWriter(os.path.join(location, "output.mp4"))
 
 # w.info.pixel_format = 0
 
@@ -23,9 +35,9 @@ w.SetOption(openshot.VIDEO_STREAM, "crf", "28")
 
 w.WriteHeader()
 w.Open()
-w.WriteFrame(c1, 1, r.info.video_length)
+w.WriteFrame(c, 1, r.info.video_length)
 w.WriteTrailer()
 
 w.Close()
-c1.Close()
+c.Close()
 r.Close()
