@@ -1,4 +1,5 @@
 {
+    "name": "OpenShot",
     "image": "aperture147/libopenshot:latest",
     "customizations": {
         "vscode": {
@@ -7,5 +8,10 @@
                 "ms-python.debugpy"
             ]
         }
-    }
+    },
+    "runArgs": [
+        "--cap-add=SYS_NICE",
+        "--cap-add=SYS_RAWIO",
+        "--cap-add=SYS_IPC"
+    ]
 }
