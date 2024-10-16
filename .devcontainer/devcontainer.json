@@ -12,8 +12,6 @@
     "capAdd": [
         "SYS_NICE",
         "SYS_RAWIO",
-        "SYS_IPC",
-        "SYS_NET",
         "SYS_PTRACE",
         "SYS_TTY_CONFIG"
     ]
