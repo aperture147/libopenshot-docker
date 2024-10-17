@@ -66,7 +66,8 @@ RUN --mount=from=build_stage,source=/build,target=/build,rw \
         libopencv-imgproc406 libopencv-videoio406 \
         libopencv-video406 \
         libprotobuf32 libprotobuf-lite32 \
-        python3 python3-zmq python3-pyqt5.qtwebengine \
+        python3 python3-pip python3-venv \
+        python3-zmq python3-pyqt5.qtwebengine \
         swig zlib1g \
         libc6 libstdc++6 \
         imagemagick-6-common libmagick++-6.q16-8 \
