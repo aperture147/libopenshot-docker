@@ -839,5 +839,12 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/python,c,c++,visualstudio,visualstudiocode,jetbrains+all,linux,windows,macos,git,venv
 
 *.mp4
+*.mp3
+*.wav
+
 *.webm
+*.webp
+
 core_python3.*
+
+*.md
