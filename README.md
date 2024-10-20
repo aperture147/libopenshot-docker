@@ -26,3 +26,12 @@ curl -L https://videos.pexels.com/video-files/28830734/12488932_1920_1080_30fps.
 ```bash
 docker run --cap-add SYS_NICE --shm-size 4G -v $(pwd):/work --rm -it aperture147/libopenshot:latest python3 /work/test.py
 ```
+
+How to build:
+-----
+
+Run:
+
+```bash
+docker build . -t openshot
+```
