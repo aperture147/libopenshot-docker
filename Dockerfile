@@ -30,6 +30,7 @@ RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list.d/debian.s
         python3-zmq python3-pyqt5.qtwebengine python3-dev \
         swig zlib1g \
         libgcc-s1 libstdc++6 \
+        libomp-dev \
         libmagick++-6.q16-dev libmagick++-dev \
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -71,6 +72,7 @@ RUN --mount=from=build_stage,source=/build,target=/build,rw \
         swig zlib1g \
         libc6 libstdc++6 \
         imagemagick-6-common libmagick++-6.q16-8 \
+        libomp5-14 \
         && \
     cd /build/libopenshot-audio && cmake --install build && \
     cd /build/libopenshot && cmake --install build && \
