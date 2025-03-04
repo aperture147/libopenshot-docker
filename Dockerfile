@@ -27,7 +27,7 @@ RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list.d/debian.s
         libopencv-dev \
         libprotobuf-dev \
         protobuf-compiler \
-        python3-zmq python3-pyqt5.qtwebengine python3-dev \
+        libpython3.11-dev \
         swig zlib1g \
         libgcc-s1 libstdc++6 \
         libomp-dev \
@@ -35,10 +35,18 @@ RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list.d/debian.s
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+ARG CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -O3 -flto=auto -ffast-math -fprofile-generate -fprofile-use -DNDEBUG -march=native -mtune=native -Wall -Wextra"
+
 RUN cd libopenshot-audio && \
-    cmake -B build -S . && cmake --build build -j$(nproc) && cmake --install build && \
+    cmake -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}" -B build -S . && cmake --build build -j$(nproc) && cmake --install build && \
     cd ../libopenshot && \
-    cmake -B build -S . && cmake --build build -j$(nproc)
+    cmake \
+        -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}" \
+        -DDISABLE_BUNDLED_JSONCPP="ON" \
+        -DCMAKE_BUILD_TYPE="Release" \
+        -DENABLE_LIB_DOCS="OFF" \
+        -B build -S . && \
+    cmake --build build -j$(nproc)
 
 FROM debian:bookworm-slim AS run_stage
 
@@ -61,14 +69,11 @@ RUN --mount=from=build_stage,source=/build,target=/build,rw \
         libqt5concurrent5 libqt5core5a \
         libqt5dbus5 libqt5svg5 \
         gir1.2-babl-0.1 libbabl-0.1-0 \
-        libopencv-contrib406 libopencv-core406 \
+        libopencv-core406 libopencv-contrib406 \
         libopencv-dnn406 libopencv-features2d406 \
-        libopencv-highgui406 libopencv-imgcodecs406 \
-        libopencv-imgproc406 libopencv-videoio406 \
-        libopencv-video406 \
-        libprotobuf32 libprotobuf-lite32 \
-        python3 python3-pip python3-venv \
-        python3-zmq python3-pyqt5.qtwebengine \
+        libopencv-imgcodecs406 libopencv-imgproc406 \
+        libprotobuf32 \
+        python3 python3-pip libpython3.11 python3-pyqt5 \
         swig zlib1g \
         libc6 libstdc++6 \
         imagemagick-6-common libmagick++-6.q16-8 \
