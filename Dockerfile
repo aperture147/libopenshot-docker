@@ -35,7 +35,7 @@ RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list.d/debian.s
         && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ARG CMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} -O3 -flto=auto -ffast-math -fprofile-generate -fprofile-use -DNDEBUG -march=native -mtune=native -Wall -Wextra"
+ARG CMAKE_CXX_FLAGS="-O3 -flto=auto -ffast-math -fprofile-generate -fprofile-use -DNDEBUG -march=native -mtune=native -Wall -Wextra"
 
 RUN cd libopenshot-audio && \
     cmake -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS}" -B build -S . && cmake --build build -j$(nproc) && cmake --install build && \
